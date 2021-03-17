@@ -1,6 +1,6 @@
 
 /*
- Lottie Decorator (dependant on Hype Data Decorator)
+Lottie Decorator 1.0.3 (dependant on Hype Data Decorator)
 copyright (c) 2019-2021 Max Ziebell, (https://maxziebell.de). MIT-license
 */
 
@@ -89,7 +89,7 @@ if("LottieDecorator" in window === false) window['LottieDecorator'] = (function 
 
 	/* Reveal Public interface to window['LottieDecorator'] */
 	return {
-		version: '1.0.2',
+		version: '1.0.3',
 		'getInstanceForElement' : getInstanceForElement,
 		'getInstanceById' : getInstanceById,
 	};
