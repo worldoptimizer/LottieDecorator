@@ -5,7 +5,7 @@ Play Lottie files in your Hype project (depends on HypeDataDecorator)
 `1.0.0 Initial release under MIT-license`\
 `1.0.1 Fix for scenes and layout switching`\
 `1.0.2 Wrapped in IIFE, instance interface`\
-`1.0.3 Changed to data-lottie-data, now allows direct data`\
+`1.0.3 Changed to data-lottie-data, now allows direct data`
 
 Content Delivery Network (CDN)
 --
