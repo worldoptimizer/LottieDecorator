@@ -1,5 +1,5 @@
 
-/*
+/*!
 Lottie Decorator 1.0.3 (dependant on Hype Data Decorator)
 copyright (c) 2019-2021 Max Ziebell, (https://maxziebell.de). MIT-license
 */
