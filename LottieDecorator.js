@@ -1,7 +1,6 @@
-
 /*!
-Lottie Decorator 1.0.3 (dependant on Hype Data Decorator)
-copyright (c) 2019-2021 Max Ziebell, (https://maxziebell.de). MIT-license
+Lottie Decorator 1.0.4 (dependant on Hype Data Decorator)
+copyright (c) 2021 Max Ziebell, (https://maxziebell.de). MIT-license
 */
 
 /*
@@ -10,6 +9,7 @@ copyright (c) 2019-2021 Max Ziebell, (https://maxziebell.de). MIT-license
 * 1.0.1 Fix for scenes and layout switching
 * 1.0.2 Wrapped in IIFE, instance interface
 * 1.0.3 Changed to data-lottie-data, now allows direct data
+* 1.0.4 Small fixes and tweaks, stability, garbage collection
 */
 
 if("LottieDecorator" in window === false) window['LottieDecorator'] = (function () {
@@ -25,6 +25,11 @@ if("LottieDecorator" in window === false) window['LottieDecorator'] = (function 
 		return 'lottie'+id;
 	}
 
+	function stringToBoolean(val){
+		if (!val || typeof val != 'string') return;
+		return val.toLowerCase().trim() == 'true';
+	}
+
 	HypeDataDecorator.observeBySelector(
 		'[data-lottie-data]', 
 		function(hypeDocument, element, event){
@@ -36,6 +41,7 @@ if("LottieDecorator" in window === false) window['LottieDecorator'] = (function 
 			if (element.dataset.lottieRendered) {
 				if (element.dataset.lottieRendered == element.dataset.lottieData) return;
 				lottie.destroy(lottieId(element));
+				elm.innerHTML = '';
 			}
 
 			element.dataset.lottieRendered = element.dataset.lottieData;
@@ -44,8 +50,8 @@ if("LottieDecorator" in window === false) window['LottieDecorator'] = (function 
 				container: elm,
 				renderer: 'svg',
 				name: lottieId(element),
-				autoplay: false,
-				loop: false,
+				autoplay:  stringToBoolean(element.dataset.lottieAutoplay) || false,
+				loop: stringToBoolean(element.dataset.lottieLoop) || false,
 			};
 			
 			if (element.dataset.lottieData.indexOf('.json')==-1) {
@@ -79,6 +85,21 @@ if("LottieDecorator" in window === false) window['LottieDecorator'] = (function 
 		}
 	);
 
+	function HypeSceneUnload(hypeDocument, element, event){
+		var sceneElm = document.getElementById(hypeDocument.currentSceneId());
+		sceneElm.querySelectorAll('[data-lottie-rendered]').forEach(function(elm){
+			elm.removeAttribute('data-lottie-rendered');
+			lottie.destroy(lottieId(elm));
+			console.log('destroyed ',lottieId(elm));
+		});
+		// uncomment to destroy all instances page wide
+		//lottie.destroy();
+	}
+
+	if("HYPE_eventListeners" in window === false) { window.HYPE_eventListeners = Array(); }
+	window.HYPE_eventListeners.push({"type":"HypeSceneUnload", "callback":HypeSceneUnload});
+
+
 	function getInstanceForElement(element){
 		return lottieInstance[lottieId(element)];
 	}
@@ -89,7 +110,7 @@ if("LottieDecorator" in window === false) window['LottieDecorator'] = (function 
 
 	/* Reveal Public interface to window['LottieDecorator'] */
 	return {
-		version: '1.0.3',
+		version: '1.0.4',
 		'getInstanceForElement' : getInstanceForElement,
 		'getInstanceById' : getInstanceById,
 	};
