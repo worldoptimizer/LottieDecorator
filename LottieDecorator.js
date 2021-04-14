@@ -1,5 +1,5 @@
 /*!
-Lottie Decorator 1.0.4 (dependant on Hype Data Decorator)
+Lottie Decorator 1.0.5 (dependant on Hype Data Decorator)
 copyright (c) 2021 Max Ziebell, (https://maxziebell.de). MIT-license
 */
 
@@ -10,6 +10,7 @@ copyright (c) 2021 Max Ziebell, (https://maxziebell.de). MIT-license
 * 1.0.2 Wrapped in IIFE, instance interface
 * 1.0.3 Changed to data-lottie-data, now allows direct data
 * 1.0.4 Small fixes and tweaks, stability, garbage collection
+* 1.0.5 Removed leftover console.log statements
 */
 
 if("LottieDecorator" in window === false) window['LottieDecorator'] = (function () {
@@ -55,7 +56,6 @@ if("LottieDecorator" in window === false) window['LottieDecorator'] = (function 
 			};
 			
 			if (element.dataset.lottieData.indexOf('.json')==-1) {
-				console.log('was here', element.dataset.lottieData, window[element.dataset.lottieData.trim()]);
 				options.animationData = window[element.dataset.lottieData.trim()];
 			} else {
 				options.path = element.dataset.lottieData;
@@ -90,7 +90,6 @@ if("LottieDecorator" in window === false) window['LottieDecorator'] = (function 
 		sceneElm.querySelectorAll('[data-lottie-rendered]').forEach(function(elm){
 			elm.removeAttribute('data-lottie-rendered');
 			lottie.destroy(lottieId(elm));
-			console.log('destroyed ',lottieId(elm));
 		});
 		// uncomment to destroy all instances page wide
 		//lottie.destroy();
@@ -110,7 +109,7 @@ if("LottieDecorator" in window === false) window['LottieDecorator'] = (function 
 
 	/* Reveal Public interface to window['LottieDecorator'] */
 	return {
-		version: '1.0.4',
+		version: '1.0.5',
 		'getInstanceForElement' : getInstanceForElement,
 		'getInstanceById' : getInstanceById,
 	};
