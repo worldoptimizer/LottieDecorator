@@ -1,5 +1,7 @@
 # LottieDecorator
-Play Lottie files in your Hype project (depends on HypeDataDecorator)
+Play Lottie files in your Hype project (depends on Hype Data Decorator). To make this work in a fresh document, you need to include the Lottie runtime (light or full) and Hype Data Decorator before including this file. In a production scenario, you could also combine the three in the mentioned order into one single JavaScript file.
+
+This repository also includes a Python file that can batch convert Lottie JSON files into JavaScript variables, further reducing requests. The usage of that step is completely optional.
 
 ## Version-History
 `1.0.0 Initial release under MIT-license`\
